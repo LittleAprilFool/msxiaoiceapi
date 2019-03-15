@@ -2,7 +2,6 @@ import requests
 import json
 import time
 import sys
-from bs4 import BeautifulSoup
 from flask import Flask,request,jsonify
 import re
 
