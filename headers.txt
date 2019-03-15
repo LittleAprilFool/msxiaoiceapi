@@ -1,4 +1,12 @@
-Accept:*/*
-Accept-Encoding:gzip, deflate, br
-Accept-Language:en-US,en;q=0.9
-Connection:keep-alive
+accept: */*
+accept-encoding: gzip, deflate, br
+accept-language: en-US,en;q=0.9
+cache-control: no-cache
+content-length: 123
+content-type: application/x-www-form-urlencoded
+cookie: _ga=GA1.2.1323135797.1543259526; __gads=ID=11890c9343039e44:T=1543259536:S=ALNI_MZBb4oaTQKSpskNyLlcY340PO2ohA; SINAGLOBAL=6434364709577.638.1543259530639; un=aprilwang.zju@gmail.com; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9W5A9K8pQGjruGwwS51kqfs25JpX5KMhUgL.FoeR1hnRSKMpeKM2dJLoIXnLxKBLBonL12BLxK-L1-zL1--LxK-LBKBLBoBLxKML1-2L1hBLxKqLB.2LB.2LxKqLBo5LBoBLxK-LBo5L12qLxKqLBK2L1het; wvr=6; UOR=,,login.sina.com.cn; wb_view_log_3888857117=1440*9002; YF-V5-G0=f0aa2e6d566ccd1c288fae19df01df56; ALF=1584210310; SSOLoginState=1552674314; SCF=Ah59PAAKLGytl5ESxKQPQjwd6mgIPW_Sgnc0xxh2Iv2CPP0BOnJIB2bX3SGHbD_yw_NS1U0Fg3k1hBDEdSdHoMA.; SUB=_2A25xj55aDeRhGeVG41oZ9SnNyjuIHXVS_IiSrDV8PUNbmtBeLUvckW9NT5xkMXeApWs4OVjFPi5z4GeJwm8qs6G5; SUHB=0laV4-3uQHGA91; YF-Page-G0=854ebb7f403eecfa60ed1f0e977c6825; _s_tentry=-; Apache=7654896415260.557.1552674402963; ULV=1552674402979:6:2:2:7654896415260.557.1552674402963:1552359921146; webim_unReadCount=%7B%22time%22%3A1552674414082%2C%22dm_pub_total%22%3A0%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A0%2C%22msgbox%22%3A0%7D
+origin: https://www.weibo.com
+pragma: no-cache
+referer: https://www.weibo.com/message/history?uid=5175429989&name=%25E5%25B0%258F%25E5%2586%25B0
+user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36
+x-requested-with: XMLHttpRequest

@@ -50,9 +50,11 @@ class xiaoiceApi():
         
         try:
             #原http的api已改为https的api
-            url = 'https://weibo.com/aj/message/add?ajwvr=6'
+            url = 'https://www.weibo.com/aj/message/add?ajwvr=6&__rnd=1552674414345'
             page = requests.post(url, data=data, headers=self.headers)
             self.savePage(page.text, "./tmp/postpage.txt")
+            print("yeah!!")
+            print(page.json()['msg'])
             if page.json()['code'] == '100000':
                 code, text, res_type = self.loop(input_strs)
                 return self.dicts(code, res_type, text)
@@ -71,45 +73,23 @@ class xiaoiceApi():
         '''  
             刷新直到获取到回答
         '''
+        print('Debugging Loop')
         times = 1
         while times <= 20:
             times += 1
-            #同上，原http的api已改为https的api,另外headers用全反而无法获取页面，只需用到cookies
-            response = requests.get("https://weibo.com/aj/message/getbyid?ajwvr=6&uid=5175429989&count=1&_t=0" , headers={"Cookie":self.headers["Cookie"]})
+            #同上，原http的api已改为https的api,另外headers用全反而无法获取页面，(只需用到cookies
+            url = "https://api.weibo.com/webim/2/direct_messages/conversation.json?convert_emoji=1&count=15&max_id=0&uid=5175429989&is_include_group=0&source=209678993&t=1552675488336"
+            cookie_tmp = "_ga=GA1.2.1323135797.1543259526; __gads=ID=11890c9343039e44:T=1543259536:S=ALNI_MZBb4oaTQKSpskNyLlcY340PO2ohA; SINAGLOBAL=6434364709577.638.1543259530639; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9W5A9K8pQGjruGwwS51kqfs25JpX5KMhUgL.FoeR1hnRSKMpeKM2dJLoIXnLxKBLBonL12BLxK-L1-zL1--LxK-LBKBLBoBLxKML1-2L1hBLxKqLB.2LB.2LxKqLBo5LBoBLxK-LBo5L12qLxKqLBK2L1het; wvr=6; UOR=,,login.sina.com.cn; ALF=1584210310; SSOLoginState=1552674314; SCF=Ah59PAAKLGytl5ESxKQPQjwd6mgIPW_Sgnc0xxh2Iv2CPP0BOnJIB2bX3SGHbD_yw_NS1U0Fg3k1hBDEdSdHoMA.; SUB=_2A25xj55aDeRhGeVG41oZ9SnNyjuIHXVS_IiSrDV8PUNbmtBeLUvckW9NT5xkMXeApWs4OVjFPi5z4GeJwm8qs6G5; SUHB=0laV4-3uQHGA91; _s_tentry=-; Apache=7654896415260.557.1552674402963; ULV=1552674402979:6:2:2:7654896415260.557.1552674402963:1552359921146; webim_unReadCount=%7B%22time%22%3A1552675474252%2C%22dm_pub_total%22%3A0%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A0%2C%22msgbox%22%3A0%7D"
+            response = requests.get(url, headers={"Cookie":cookie_tmp, "Referer": "https://api.weibo.com/chat/"})
             self.savePage(response.text, "./tmp/response.txt")
-            soup = BeautifulSoup(response.json()['data']['html'], "lxml")           
-            text = soup.find("p", class_='page')
+            res_text = response.json()['direct_messages']
+            message = res_text[0]
+            text = message['text']
             if text:
-                if text.text == input_strs:
-                    time.sleep(0.3)
-                    continue
-            elif "收起" in soup.get_text():
-                #返回imgURL
-                imgUrl = soup.find(href=re.compile('msget')).get('href')
-                return 200, imgUrl, "img"
-                '''
-                text = "图片地址： " + imgUrl
-                picRespone = requests.get(imgUrl, headers={"Cookie":self.headers["Cookie"]})
-                if picRespone.status_code == 200:
-                    with open('pic.jpg', 'wb') as f:
-                        f.write(picRespone.content)
-                img = Image.open('pic.jpg')
-                img.show()
-                '''
-                
-            elif "mp3" in soup.get_text():
-                mp3Url = soup.find(href=re.compile('msget')).get('href')
-                return 200, mp3Url,"voice"
-                # 返回语音URL
-
-                '''
-                text = "语音地址： " + imgUrl
-                picRespone = requests.get(imgUrl, headers={"Cookie":self.headers["Cookie"]})
-                if picRespone.status_code == 200:
-                    with open('voice.mp3', 'wb') as f:
-                        f.write(picRespone.content)
-                '''
-            return 200, text.text, "text"
+                 if text == input_strs:
+                     time.sleep(0.3)
+                     continue
+            return 200, text, "text"
         text = "错误： 已达到最大重试次数"
         return 500, text, "failed"
             
